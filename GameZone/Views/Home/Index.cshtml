@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Game>
+@if (Model == null)
+{
+    <div class="alert alert-warning mt-5">
+        <h4 class="alert-heading">No games!</h4>
+        <p class="mb-0">No games were added yet.</p>
+    </div>
+}
+else
+{
+    <div class="row mt-5">
+        @foreach (var game in Model)
+        {
+            <a class="col-lg-4 col-md-6 mb-4 text-decoration-none" asp-controller="Games" asp-action="Details" asp-route-id="@game.Id">
+                <div class="card border-primary shadow-sm">
+                    <div class="card-body p-0" style="background-image: url('@Url.Content("~/Assets/GamesImage/" + game.Cover)'); background-size: cover; background-position: center; height: 200px;">
+                        <div class="h-100 d-flex flex-column justify-content-between">
+                            <div class="d-flex justify-content-end">
+                                <span class="badge bg-secondary rounded-0 m-2">@game.Category.Name</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted d-flex justify-content-between align-items-center">
+                        <h5 class="m-0">@game.Name</h5>
+                        <div>
+                            @foreach (var GameDevice in game.Devices)
+                            {
+                                <i class="@GameDevice.Device.Icon me-1"></i>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+}
